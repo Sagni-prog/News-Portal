@@ -1,0 +1,1 @@
+<a class="btn btn-primary" href="{{url('add_sub_catagory')}}">+Add</a>
