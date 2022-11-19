@@ -71,6 +71,9 @@ class AdminController extends Controller
            }
     }
 
+    public function updateProfile(){
+        return view('admin.update_profile');
+    }
 
     public static function getDimension($path){
         [$width,$height] = getimagesize(Storage::path($path));

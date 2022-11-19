@@ -10,6 +10,11 @@ use App\Http\Controllers\admin\SettingController;
 use App\Http\Controllers\admin\OnlinePollController;
 
 
+// Route::get('/',function(){
+//     return 'welcome';
+// });
+
+
 Route::get('/',[HomeController::class,'getHome']);
 Route::get('/router',[RouterController::class,'route']);
 Route::get('post_single/{post}',[HomeController::class,'singlePost']);
@@ -33,6 +38,8 @@ Route::middleware([
 
     Route::group(['middleware'=>['isAdmin']],function(){
         Route::get('/dashboard',[AdminController::class,'getDashboard']);
+
+        Route::get('profile/update',[AdminController::class,'updateProfile']);
 
         Route::get('add_catagory',[CatagoryController::class,'showAddcatagory'])->name('add_catagory');
         Route::get('/catagories',[CatagoryController::class,'showCatagory'])->name('show_catagories');
