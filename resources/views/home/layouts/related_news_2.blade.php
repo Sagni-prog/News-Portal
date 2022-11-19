@@ -7,27 +7,27 @@
 
         @foreach ($related_posts_catagory as $catagory)
             @foreach ($catagory->subCatagories as $sub_catagory)
-                @foreach ($sub_catagory->post as $posts)
+                @foreach ($sub_catagory->post as $post)
                     <div class="item">
                         <div class="photo">
-                            <img src="{{ $posts->photo->photo_url }}" alt="">
+                            <img src="{{ $post->photo->photo_url }}" alt="">
                         </div>
                         <div class="category">
-                            <span class="badge bg-success">{{ $posts->subCatagory->sub_catagory_name  }}</span>
+                            <span class="badge bg-success">{{ $post->subCatagory->sub_catagory_name  }}</span>
                         </div>
                         @php
-                           $post = $posts;    
+                           $posts = $post;    
                        @endphp
                       
                         <h3><a href="{{ url('single',$posts)}}">{{ $post->post_title }}</a></h3>
                         <div class="date-user">
                             <div class="user">
-                                <a href="">{{ $posts->author->name }}</a>
+                                <a href="">{{ $post->author->name }}</a>
                             </div>
                             <div class="date">
                                 <a href="">
                                     {{
-                                        \Carbon\Carbon::parse($posts->created_at)->toFormattedDateString()
+                                        \Carbon\Carbon::parse($post->created_at)->toFormattedDateString()
                                     }}
                                 </a>
                             </div>

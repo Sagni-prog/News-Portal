@@ -66,7 +66,7 @@
                                     </div>
                                 @endif
 
-                                <form method="POST" action="{{ route('register') }}">
+                                <form method="POST" action="{{ route('register_user') }}" enctype="multipart/form-data"hp >
                                     @csrf
                                     <div class="form-group">
                                         <input type="text" class="form-control" name = "name" placeholder="Name" value="" autofocus>
@@ -80,9 +80,12 @@
                                     <div class="form-group">
                                         <input type="password" class="form-control" name="password_confirmation"  placeholder="Confirm Password">
                                     </div>
-                                    {{-- <div class="form-group">
-                                        <input type="number" class="form-control" name="user_type"  placeholder="Password">
-                                    </div> --}}
+
+                                    <div class="form-group mb-3">
+                                        <label>Photo</label>
+                                        <input type="file" class="form-control" name="photo" value="">
+                                    </div>
+                                   
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-primary btn-lg btn-block">
                                             Register

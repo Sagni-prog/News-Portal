@@ -38,9 +38,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    // protected $appends = [
-    //     'profile_photo_url',
-    // ];
+    public function photo(){
+        return $this->morphOne(Photo::class,'photoable');
+    }
+
+    public function comments(){
+        return $this->hasMany(Comment::class);
+    }
  
 
 }

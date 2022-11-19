@@ -28,4 +28,15 @@
             justify-content: space-between;
             align-items: center;
         }
+
+        .profile{
+            width: 40px;
+            height: 40px;
+        }
+
+        img{
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+        }
     </style>

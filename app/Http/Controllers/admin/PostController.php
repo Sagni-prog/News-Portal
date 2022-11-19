@@ -42,7 +42,7 @@ class PostController extends Controller
                 
                 $filename = 'image-' . time() . '.' . $ext;
                 
-            // $path = Storage::putFileAs('images',$request->photo,$image_name.'.'.$ext);
+            
            
              $path = $request->file('photo')->storeAs('photos', $filename);
              $image_url = Storage::url($path);
@@ -162,5 +162,14 @@ class PostController extends Controller
             "height" => $height
         ];
          return $data; 
+    }
+
+    public function postComment(Post $post, Request $request){
+          $post->comments()->create([
+            'user_id' => Auth::user()->id,
+            'comment' => $request->comment,
+          ]);
+
+          return back();
     }
 }

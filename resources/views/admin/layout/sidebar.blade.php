@@ -31,6 +31,8 @@
 
             <li class=""><a class="nav-link" href="{{url('sub_catagories')}}"><i class="fas fa-hand-point-right"></i> <span>Sub catagory</span></a></li>
 
+            <li class=""><a class="nav-link" href="{{url('poll')}}"><i class="fas fa-hand-point-right"></i> <span>Online Poll</span></a></li>
+
         </ul>
     </aside>
 </div>

@@ -78,12 +78,12 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2>{{ $post->post_title }}</h2>
+                        <h2>{{ $posts->post_title }}</h2>
                         <nav class="breadcrumb-container">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
-                                <li class="breadcrumb-item"><a href="category.html">{{ $post->subCatagory->sub_catagory_name }}</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">{{ $post->post_title }}</li>
+                                <li class="breadcrumb-item"><a href="category.html">{{ $posts->subCatagory->sub_catagory_name }}</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">{{ $posts->post_title }}</li>
                             </ol>
                         </nav>
                     </div>
@@ -101,11 +101,11 @@
                         <div class="sub">
                             <div class="item">
                                 <b><i class="fas fa-user"></i></b>
-                                <a href="">{{ $post->author->name }}</a>
+                                <a href="">{{ $posts->author->name }}</a>
                             </div>
                             <div class="item">
                                 <b><i class="fas fa-edit"></i></b>
-                                <a href="">{{ $post->subCatagory->sub_catagory_name }}</a>
+                                <a href="">{{ $posts->subCatagory->sub_catagory_name }}</a>
                             </div>
                             <div class="item">
                                 <b><i class="fas fa-clock"></i></b>
@@ -113,11 +113,11 @@
                             </div>
                             <div class="item">
                                 <b><i class="fas fa-eye"></i></b>
-                                {{ $post->visitors }}
+                                {{ $posts->visitors }}
                             </div>
                         </div>
                         <div class="main-text" style="font-size: 32px;">
-                           {!! $post->post_detail !!}
+                           {!! $posts->post_detail !!}
                         </div>
                         <div class="tag-section">
                             <h2>Tags</h2>
@@ -139,6 +139,7 @@
                               <img src="asset{{'../../../home/uploads/n3.jpg'}}"  width = "60px" height = "60px" style="border-radius: 50%;" alt="">
                               @endif
                        
+                              @php $post = $posts; @endphp
                           <form  method="post" action="{{ route('comment',$post) }}" enctype="multipart/form-data" style="display: flex;
                           align-items: center;">
                             @csrf
@@ -154,7 +155,7 @@
                         </form>
                       </div>
 
-                        @include('home.layouts.related_news')
+                        @include('home.layouts.related_news_2')
                     </div>
 
                     @include('home.layouts.sidebar')

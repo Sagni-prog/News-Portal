@@ -56,6 +56,33 @@ class HomeController extends Controller
          return view('home.single_post',compact('post','catagories','sub_catagory','setting','related_posts_catagory'));
   }
 
+  public function singleRelatedPost(Post $posts){
+
+    
+       
+    $setting = Setting::all()->first();
+        $catagories = Catagory::with('subCatagories')
+        ->where('show_on_menu','show')
+        ->whereHas('subCatagories',function($query){
+          $query->where('show_on_menu','show');
+    })->get();
+
+    $sub_catagory = Subcatagory::with('post','catagory')->get();
+
+      $old_value = $posts->visitors;
+      $new_value = $old_value + 1;
+      $posts->update([
+          'visitors' => $new_value
+    ]);
+
+
+    $related_posts_catagory = Catagory::with('subCatagories')
+                                ->where('catagory_name',$posts->subCatagory->catagory->catagory_name)->get();
+
+  
+     return view('home.single_related_post',compact('posts','catagories','sub_catagory','setting','related_posts_catagory'));
+}
+
         public function getSubCatagory($catagoryId){
             return $catagoryId;
        } 
