@@ -3,15 +3,19 @@
         <div class="row">
             <div class="col-md-6">
                 <ul>
-                    <li class="today-text">Today: January 20, 2022</li>
-                    <li class="email-text">contact@arefindev.com</li>
+                    <li class="today-text">
+                        {{
+                            \Carbon\Carbon::parse(time())->toFormattedDateString()
+                        }}
+                    </li>
+                    {{-- <li class="email-text">contact@arefindev.com</li> --}}
                 </ul>
             </div>
             <div class="col-md-6">
                 <ul class="right">
                     <li class="menu"><a href="faq.html">FAQ</a></li>
                     <li class="menu"><a href="about.html">About</a></li>
-                    <li class="menu"><a href="contact.html">Contact</a></li>
+                    <li class="menu"><a href="{{ url('contact')}}">Contact</a></li>
                     @if(Auth::check())
                     <form method="post" action="{{route('logout')}}"> 
                         @csrf

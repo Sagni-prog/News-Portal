@@ -31,8 +31,9 @@ class HomeController extends Controller
           return view('home.home',compact('setting','posts','catagories','sub_catagory','sub_catagory_data'));
   }
 
-  public function singlePost(Post $post){
-       
+  public function singlePost(Post $post, Request $request){
+
+   
         $setting = Setting::all()->first();
             $catagories = Catagory::with('subCatagories')
             ->where('show_on_menu','show')
@@ -105,14 +106,26 @@ class HomeController extends Controller
            $setting = Setting::all()->first();
         
 
-           $catagories = Catagory::with('subCatagories')
-                            ->where('show_on_menu','show')
-                            ->whereHas('subCatagories',function($query){
-                               $query->where('show_on_menu','show');
-                    })->get();
+       
            $sub_catagory = Subcatagory::with('post','catagory')->get();
 
            
-             return view('home.post_by_catagory',compact('post_data','catagories','sub_catagory','setting'));
+             return view('home.post_by_catagory',compact('post_data','sub_catagory','setting'));
+         }
+
+         
+       public function newsBySubCatagory(Subcatagory $sub_catagory, Request $request){
+
+            
+           $post_data =  $sub_catagory->post;
+
+         $setting = Setting::all()->first();
+     
+
+          return view('home.post_by_catagory_2',compact('post_data','sub_catagory','setting'));
+      }
+
+         public function showContact(){
+           return view('home.contact');
          }
      }

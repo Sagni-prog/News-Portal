@@ -9,7 +9,7 @@
 		
         <link rel="icon" type="image/png" href="uploads/favicon.png">
 
-        <!-- All CSS -->
+
          <!-- All CSS -->
   <link rel="stylesheet" href="asset{{'../../../home/css/bootstrap.min.css'}}">
   <link rel="stylesheet" href="asset{{'../../../home/css/jquery-ui.css'}}">
@@ -152,6 +152,8 @@
                                 <button type="submit" class="btn btn-primary">Comment</button>
                             </div>
                         </form>
+
+
                       </div>
 
                         @include('home.layouts.related_news')

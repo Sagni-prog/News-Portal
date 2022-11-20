@@ -33,6 +33,8 @@
 
             <li class=""><a class="nav-link" href="{{url('poll')}}"><i class="fas fa-hand-point-right"></i> <span>Online Poll</span></a></li>
 
+            <li class=""><a class="nav-link" href="{{url('profile/update',Auth::user())}}"><i class="fas fa-hand-point-right"></i> <span>Update Profile</span></a></li>
+
         </ul>
     </aside>
 </div>

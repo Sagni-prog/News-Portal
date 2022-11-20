@@ -16,9 +16,13 @@ use App\Http\Controllers\admin\OnlinePollController;
 
 
 Route::get('/',[HomeController::class,'getHome']);
+Route::get('contact',[HomeController::class,'showContact']);
+Route::get('gallery',[HomeController::class,'showContact']);
 Route::get('/router',[RouterController::class,'route']);
 Route::get('post_single/{post}',[HomeController::class,'singlePost']);
 Route::get('single/{posts}',[HomeController::class,'singleRelatedPost'])->name('post/{posts}');
+
+Route::get('posts/{sub_catagory}',[HomeController::class,'newsBySubCatagory']);
 
 Route::get('sub-catagory-by-catagory/{catagoryId}',[HomeController::class,'getSubCatagory']);
 
@@ -39,7 +43,9 @@ Route::middleware([
     Route::group(['middleware'=>['isAdmin']],function(){
         Route::get('/dashboard',[AdminController::class,'getDashboard']);
 
-        Route::get('profile/update',[AdminController::class,'updateProfile']);
+        Route::get('profile/update/{user}',[AdminController::class,'showUpdateProfile']);
+        Route::post('profile/{user}',[AdminController::class,'updateProfile'])->name('update_profile');
+        Route::post('profile/update/{user}',[AdminController::class,'updatePassword'])->name('update_password');
 
         Route::get('add_catagory',[CatagoryController::class,'showAddcatagory'])->name('add_catagory');
         Route::get('/catagories',[CatagoryController::class,'showCatagory'])->name('show_catagories');
