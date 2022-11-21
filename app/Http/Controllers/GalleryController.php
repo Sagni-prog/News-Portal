@@ -51,6 +51,29 @@ class GalleryCOntroller extends Controller
             'comment' => $request->comment,
           ]);
     }
+
+    public function galleryLike(PhotoGallery $photo){
+        $liker = $photo->likes->where('user_id',Auth::user()->id)->first();
+
+     
+      
+        if(!$liker){
+          $like = $photo->likes()->create([
+            'user_id' => Auth::user()->id,
+            'is_liked' => true
+           ]);
+        }
+        else{
+
+         $like = $liker->update([
+            'is_liked' => !$liker->is_liked
+          ]);
+        }
+
+        if($like){
+            return back();
+        }
+    }
     
     public static function getDimension($path){
         [$width,$height] = getimagesize(Storage::path($path));

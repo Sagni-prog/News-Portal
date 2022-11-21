@@ -42,6 +42,9 @@ Route::middleware([
 ])->group(function () {
 
     Route::post('post/comment/{post}',[PostController::class,'postComment'])->name('comment');
+    Route::post('post/like/{post}',[PostController::class,'postLike'])->name('post_like');
+    Route::post('gallery/like/{photo}',[GalleryController::class,'galleryLike'])->name('like_gallery');
+
     Route::post('gallery/comment/{photo}',[GalleryController::class,'galleryComment'])->name('comment_gallery');
 
     Route::group(['middleware'=>['isAdmin']],function(){

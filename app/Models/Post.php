@@ -44,4 +44,7 @@ class Post extends Model
           public function comments(){
               return $this->MorphMany(CommentModel::class,'commentable');
           }
+          public function likes(){
+              return $this->MorphMany(Like::class,'likeable');
+          }
     }

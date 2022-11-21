@@ -163,6 +163,32 @@ class PostController extends Controller
          return $data; 
     }
 
+    
+    public function postLike(Post $post){
+
+        
+         $liker = $post->likes->where('user_id',Auth::user()->id)->first();
+
+          
+      
+        if(!$liker){
+          $like = $post->likes()->create([
+            'user_id' => Auth::user()->id,
+            'is_liked' => true
+           ]);
+        }
+        else{
+
+         $like = $liker->update([
+            'is_liked' => !$liker->is_liked
+          ]);
+        }
+
+        if($like){
+            return back();
+        }
+    }
+
     public function postComment(Post $post, Request $request){
           $post->comments()->create([
             'user_id' => Auth::user()->id,

@@ -104,6 +104,7 @@
             display: flex;
             align-items: center;
             gap: 3rem;
+            /* margin-bottom: 6.4rem; */
           
         }
 
@@ -150,9 +151,10 @@
             display: flex;
             /* align-items: center; */
             width: 80%;
-            margin-bottom: 3rem;
+            margin-bottom: 1.6rem;
             margin-left: 8rem;
              gap: 1rem; 
+             
         }
       
         .author img{
@@ -163,7 +165,7 @@
         }
         .comment_body{
            display: inline-block;
-           margin-bottom: 6.4rem;
+           margin-bottom: 1rem;
           
         }
         .comment_wrapper{
@@ -171,6 +173,7 @@
             align-self: flex-start;
             flex-direction: column;
             gap: 1rem;
+         
         }
         .comment_wrapper p{
             display: inline-block;
@@ -188,9 +191,15 @@
         .btn{
             border: none;
             outline: none;
-            background-color: #fff;
+            /* background-color: #fff; */
             font-size: 2rem;
             cursor: pointer;
+        }
+        .like_btn{
+            border: none;
+            outline: none;
+            margin: 0;
+            background-color: #fff;
         }
 
                /* comment */
@@ -231,22 +240,74 @@
           <h4>{{ $photo->photo_title }}</h4>
           <p>{!! $photo->photo_description !!}</p>
 
+      {{-- for authenticated user --}}
+         @if(Auth::check())
           <div class="icons">
-              @foreach ($photo->comments as $comment)
-              @if($loop->iteration == 2)
-                   @break   
-             @endif
+             
+            @if( $photo->comments->where('user_id',Auth::user()->id)->count())
+            <span>
+                <svg class="activated" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0z"></path><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18zM18 14H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"></path></svg>
+                <p>{{ $photo->comments->count()}}</p>
+               
+            </span>
+            @else
             <span>
                 <svg class="not_activated" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0z"></path><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18zM18 14H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"></path></svg>
-                <p>{{$comment->where(['commentable_type' => 'App\Models\PhotoGallery'
-                , 'commentable_id' => $photo->id])->count()}}</p>
+                <p>{{ $photo->comments->count()}}</p>
+               
             </span>
-            @endforeach
-          <span>
-            <svg class="not_activated"  stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M104 224H24c-13.255 0-24 10.745-24 24v240c0 13.255 10.745 24 24 24h80c13.255 0 24-10.745 24-24V248c0-13.255-10.745-24-24-24zM64 472c-13.255 0-24-10.745-24-24s10.745-24 24-24 24 10.745 24 24-10.745 24-24 24zM384 81.452c0 42.416-25.97 66.208-33.277 94.548h101.723c33.397 0 59.397 27.746 59.553 58.098.084 17.938-7.546 37.249-19.439 49.197l-.11.11c9.836 23.337 8.237 56.037-9.308 79.469 8.681 25.895-.069 57.704-16.382 74.757 4.298 17.598 2.244 32.575-6.148 44.632C440.202 511.587 389.616 512 346.839 512l-2.845-.001c-48.287-.017-87.806-17.598-119.56-31.725-15.957-7.099-36.821-15.887-52.651-16.178-6.54-.12-11.783-5.457-11.783-11.998v-213.77c0-3.2 1.282-6.271 3.558-8.521 39.614-39.144 56.648-80.587 89.117-113.111 14.804-14.832 20.188-37.236 25.393-58.902C282.515 39.293 291.817 0 312 0c24 0 72 8 72 81.452z"></path></svg>
-            <p>8</p>
-           </span>
+            @endif
+         
+
+     
+       @if($photo->likes->where('user_id',Auth::user()->id)->count() && 
+            $photo->likes->where('user_id',Auth::user()->id)->first()->is_liked)
+         <form method = "post" action="{{ route('like_gallery',$photo)}}">
+            @csrf
+             <button class="like_btn" type="submit">
+                <span>
+                    <svg class="activated"  stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M104 224H24c-13.255 0-24 10.745-24 24v240c0 13.255 10.745 24 24 24h80c13.255 0 24-10.745 24-24V248c0-13.255-10.745-24-24-24zM64 472c-13.255 0-24-10.745-24-24s10.745-24 24-24 24 10.745 24 24-10.745 24-24 24zM384 81.452c0 42.416-25.97 66.208-33.277 94.548h101.723c33.397 0 59.397 27.746 59.553 58.098.084 17.938-7.546 37.249-19.439 49.197l-.11.11c9.836 23.337 8.237 56.037-9.308 79.469 8.681 25.895-.069 57.704-16.382 74.757 4.298 17.598 2.244 32.575-6.148 44.632C440.202 511.587 389.616 512 346.839 512l-2.845-.001c-48.287-.017-87.806-17.598-119.56-31.725-15.957-7.099-36.821-15.887-52.651-16.178-6.54-.12-11.783-5.457-11.783-11.998v-213.77c0-3.2 1.282-6.271 3.558-8.521 39.614-39.144 56.648-80.587 89.117-113.111 14.804-14.832 20.188-37.236 25.393-58.902C282.515 39.293 291.817 0 312 0c24 0 72 8 72 81.452z"></path></svg>
+                    <p>{{ $photo->likes->where('is_liked',1)->count()}}</p>
+                   </span>
+             </button>
+         </form>
+         @else
+         <form method = "post" action="{{ route('like_gallery',$photo)}}">
+            @csrf
+             <button class="like_btn" type="submit">
+                <span>
+                    <svg class="not_activated"  stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M104 224H24c-13.255 0-24 10.745-24 24v240c0 13.255 10.745 24 24 24h80c13.255 0 24-10.745 24-24V248c0-13.255-10.745-24-24-24zM64 472c-13.255 0-24-10.745-24-24s10.745-24 24-24 24 10.745 24 24-10.745 24-24 24zM384 81.452c0 42.416-25.97 66.208-33.277 94.548h101.723c33.397 0 59.397 27.746 59.553 58.098.084 17.938-7.546 37.249-19.439 49.197l-.11.11c9.836 23.337 8.237 56.037-9.308 79.469 8.681 25.895-.069 57.704-16.382 74.757 4.298 17.598 2.244 32.575-6.148 44.632C440.202 511.587 389.616 512 346.839 512l-2.845-.001c-48.287-.017-87.806-17.598-119.56-31.725-15.957-7.099-36.821-15.887-52.651-16.178-6.54-.12-11.783-5.457-11.783-11.998v-213.77c0-3.2 1.282-6.271 3.558-8.521 39.614-39.144 56.648-80.587 89.117-113.111 14.804-14.832 20.188-37.236 25.393-58.902C282.515 39.293 291.817 0 312 0c24 0 72 8 72 81.452z"></path></svg>
+                    <p>{{ $photo->likes->where('is_liked',1)->count()}}</p>
+                   </span>
+             </button>
+         </form>
+         @endif
+         
          </div>
+     {{-- for non authenticated user --}}
+         @else
+         <div class="icons">
+            @foreach ($photo->comments as $comment)
+            @if($loop->iteration == 2)
+                 @break   
+           @endif
+          <span>
+              <svg class="not_activated" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0z"></path><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18zM18 14H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"></path></svg>
+              <p>{{ $photo->comments->count()}}</p>
+          </span>
+          @endforeach
+
+       <form method = "post" action="{{ route('like_gallery',$photo)}}">
+          @csrf
+           <button class="like_btn" type="submit">
+              <span>
+                  <svg class="not_activated"  stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M104 224H24c-13.255 0-24 10.745-24 24v240c0 13.255 10.745 24 24 24h80c13.255 0 24-10.745 24-24V248c0-13.255-10.745-24-24-24zM64 472c-13.255 0-24-10.745-24-24s10.745-24 24-24 24 10.745 24 24-10.745 24-24 24zM384 81.452c0 42.416-25.97 66.208-33.277 94.548h101.723c33.397 0 59.397 27.746 59.553 58.098.084 17.938-7.546 37.249-19.439 49.197l-.11.11c9.836 23.337 8.237 56.037-9.308 79.469 8.681 25.895-.069 57.704-16.382 74.757 4.298 17.598 2.244 32.575-6.148 44.632C440.202 511.587 389.616 512 346.839 512l-2.845-.001c-48.287-.017-87.806-17.598-119.56-31.725-15.957-7.099-36.821-15.887-52.651-16.178-6.54-.12-11.783-5.457-11.783-11.998v-213.77c0-3.2 1.282-6.271 3.558-8.521 39.614-39.144 56.648-80.587 89.117-113.111 14.804-14.832 20.188-37.236 25.393-58.902C282.515 39.293 291.817 0 312 0c24 0 72 8 72 81.452z"></path></svg>
+                  <p>{{ $photo->likes->where('is_liked',1)->count()}}</p>
+                 </span>
+           </button>
+       </form>
+       </div>
+         @endif
 
          <div class="profile_wrap">
             <div class="profile">

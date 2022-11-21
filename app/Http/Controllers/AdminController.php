@@ -32,9 +32,7 @@ class AdminController extends Controller
                    
                     
                     $filename = 'image-' . time() . '.' . $ext;
-                    
                 
-               
                  $path = $request->file('photo')->storeAs('profile-photo', $filename);
                  $image_url = Storage::url($path);
           
