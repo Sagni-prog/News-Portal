@@ -103,7 +103,6 @@ class PostController extends Controller
             
             $filename = 'image-' . time() . '.' . $ext;
         
-    // $path = Storage::putFileAs('images',$request->photo,$image_name.'.'.$ext);
    
             $path = $request->file('photo')->storeAs('photos', $filename);
             $image_url = Storage::url($path);

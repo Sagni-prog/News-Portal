@@ -21,19 +21,17 @@
 
             <li class=""><a class="nav-link" href="setting.html"><i class="fas fa-hand-point-right"></i> <span>Setting</span></a></li>
 
-            {{-- <li class=""><a class="nav-link" href="{{url('add_catagory')}}"><i class="fas fa-hand-point-right"></i> <span>Add catagory</span></a></li> --}}
-
             <li class=""><a class="nav-link" href="{{url('posts')}}"><i class="fas fa-hand-point-right"></i> <span>Posts</span></a></li>
 
             <li class=""><a class="nav-link" href="{{url('catagories')}}"><i class="fas fa-hand-point-right"></i> <span>Catagories</span></a></li>
-
-            {{-- <li class=""><a class="nav-link" href="{{url('add_sub_catagory')}}"><i class="fas fa-hand-point-right"></i> <span>Add Sub catagory</span></a></li> --}}
 
             <li class=""><a class="nav-link" href="{{url('sub_catagories')}}"><i class="fas fa-hand-point-right"></i> <span>Sub catagory</span></a></li>
 
             <li class=""><a class="nav-link" href="{{url('poll')}}"><i class="fas fa-hand-point-right"></i> <span>Online Poll</span></a></li>
 
             <li class=""><a class="nav-link" href="{{url('profile/update',Auth::user())}}"><i class="fas fa-hand-point-right"></i> <span>Update Profile</span></a></li>
+
+            <li class=""><a class="nav-link" href="{{url('gallery')}}"><i class="fas fa-hand-point-right"></i> <span>Gallery</span></a></li>
 
         </ul>
     </aside>

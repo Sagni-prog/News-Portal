@@ -8,6 +8,7 @@ use App\Models\Subcatagory;
 use App\Models\Catagory;
 use App\Models\Setting;
 use App\Models\Post;
+use App\Models\PhotoGallery;
 
 class HomeController extends Controller
 {
@@ -24,10 +25,6 @@ class HomeController extends Controller
          $sub_catagory = Subcatagory::with('post','catagory')->get();
          $sub_catagory_data = Subcatagory::orderBy('sub_catagory_order','asc')->get();
 
-        
-      
-       
-   
           return view('home.home',compact('setting','posts','catagories','sub_catagory','sub_catagory_data'));
   }
 
@@ -127,5 +124,18 @@ class HomeController extends Controller
 
          public function showContact(){
            return view('home.contact');
+         }
+         public function showPhotoGallery(){
+
+          $gallery = PhotoGallery::with('photo','likes')->get();
+
+           return view('home.gallery',compact('gallery'));
+         }
+         public function showSingelPhoto(PhotoGallery $photo){
+              return view('home.single_gallery',compact('photo'));
+         }
+
+         public function showVideoGallery(){
+           return view('home.video_gallery');
          }
      }

@@ -8,6 +8,7 @@ use App\Http\Controllers\admin\CatagoryController;
 use App\Http\Controllers\admin\PostController;
 use App\Http\Controllers\admin\SettingController;
 use App\Http\Controllers\admin\OnlinePollController;
+use App\Http\Controllers\GalleryController;
 
 
 // Route::get('/',function(){
@@ -17,7 +18,9 @@ use App\Http\Controllers\admin\OnlinePollController;
 
 Route::get('/',[HomeController::class,'getHome']);
 Route::get('contact',[HomeController::class,'showContact']);
-Route::get('gallery',[HomeController::class,'showContact']);
+Route::get('gallery/photos',[HomeController::class,'showPhotoGallery']);
+Route::get('gallery/photos/{photo}',[HomeController::class,'showSingelPhoto']);
+Route::get('gallery/videos',[HomeController::class,'showVideoGallery']);
 Route::get('/router',[RouterController::class,'route']);
 Route::get('post_single/{post}',[HomeController::class,'singlePost']);
 Route::get('single/{posts}',[HomeController::class,'singleRelatedPost'])->name('post/{posts}');
@@ -38,7 +41,8 @@ Route::middleware([
     'verified'
 ])->group(function () {
 
-    Route::post('/comment/{post}',[PostController::class,'postComment'])->name('comment');
+    Route::post('post/comment/{post}',[PostController::class,'postComment'])->name('comment');
+    Route::post('gallery/comment/{photo}',[GalleryController::class,'galleryComment'])->name('comment_gallery');
 
     Route::group(['middleware'=>['isAdmin']],function(){
         Route::get('/dashboard',[AdminController::class,'getDashboard']);
@@ -70,6 +74,10 @@ Route::middleware([
         Route::post('settings',[SettingController::class,'create'])->name('setting_update');
         Route::get('/poll',[OnlinePollController::class,'show']);
         Route::get('/poll-add',[OnlinePollController::class,'addPoll']);
+
+
+        Route::get('/gallery',[GalleryController::class,'showAddGallery']);
+        Route::post('/gallery',[GalleryController::class,'create'])->name('gallery_add');
         
      });
     

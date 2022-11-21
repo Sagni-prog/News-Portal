@@ -12,7 +12,7 @@
                                 <a class="nav-link active" aria-current="page" href="{{ url('/') }}">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="{{ url('/') }}">Gallery</a>
+                                <a class="nav-link active" aria-current="page" href="{{ url('gallery/photos') }}">Gallery</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="{{ url('/') }}">Photo of the Week</a>
