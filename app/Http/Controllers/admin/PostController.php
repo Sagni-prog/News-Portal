@@ -15,8 +15,16 @@ use Stevebauman\Location\Facades\Location;
 class PostController extends Controller
 {
     public function showPost(){
+
         $posts = Post::with('subCatagory','author')->get();
-        return view('admin.post',compact('posts'));
+
+        // if (Auth::user()->cannot('view', $posts)) {
+        //     abort(403);
+        // }
+       
+            return view('admin.post',compact('posts'));
+        
+
     }
     public function showAddPost(){
         $sub_catagories = Subcatagory::with('catagory')->get();
@@ -149,9 +157,15 @@ class PostController extends Controller
    }
 
     public function destroy(Post $post){
-         $post->delete();
-         $post->tags()->delete();
-         return redirect('posts');
+
+        if(Auth::user()->cannot('delete',$post)){
+            abort(403);
+        }
+        else{
+            $post->delete();
+            $post->tags()->delete();
+            return redirect('posts');
+        }
     }
 
     public static function getDimension($path){

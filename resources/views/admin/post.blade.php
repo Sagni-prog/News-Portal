@@ -28,6 +28,7 @@
                             <tbody>
 
                      @foreach ($posts as $post)
+                        @can('view',$post)
                             <tr>
                                 <td>{{$post->id}}</td>
                                 <td>{{ $post->post_title }}</td>
@@ -42,15 +43,17 @@
                                 <td class="pt_10 pb_10 flex">
                                  
                                     <a href="{{url('post',$post)}}" class="btn btn-success">Edit</a>
-                                    {{-- 
-                                    <a href="{{url('post_delete',$post)}}" class="btn btn-danger" onClick="return confirm('Are you sure?');">Delete</a> --}}
+                                    
+                                   
                                     <form method="post" action = "{{route('post_delete',$post)}}">
                                         @csrf
-                                         <button type="submit" class="btn btn-danger">Delete</button>
+                                        <button type="submit" class="btn btn-danger" onClick="return confirm('Are you sure?');">Delete</button> 
+                                         {{-- <button type="submit" class="btn btn-danger">Delete</button> --}}
                                     </form>
                                 </td>
                                
                             </tr>
+                            @endcan
                       @endforeach
 
                             </tbody>

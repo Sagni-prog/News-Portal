@@ -69,7 +69,7 @@ Route::middleware([
         Route::get('post_add',[PostController::class,'showAddPost']);
         Route::post('post',[PostController::class,'create'])->name('add_post');
     
-        Route::get('/post/{post}',[PostController::class,'showEditPost'])->name('edit_post');
+        Route::get('/post/{post}',[PostController::class,'showEditPost'])->name('edit_post')->middleware('can:update,post');
         Route::post('/post_edit/{post}',[PostController::class,'edit'])->name('post_edit');
     
         Route::post('/post_delete/{post}',[PostController::class,'destroy'])->name('post_delete');
