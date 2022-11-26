@@ -33,6 +33,7 @@ class PostController extends Controller
 
     public function create(Request $request){
 
+     
         $posts = Post::create([
                         'admin_id' => Auth::user()->id,
                         'post_title' => $request->post_title,
@@ -82,9 +83,9 @@ class PostController extends Controller
            ]);
 
            return redirect('posts');
-           
+             }
           }
-       }
+       
     }
 
     
