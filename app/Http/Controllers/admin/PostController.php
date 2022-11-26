@@ -10,6 +10,7 @@ use App\models\Tag;
 use Storage;
 use Auth;
 use File;
+use Stevebauman\Location\Facades\Location;
 
 class PostController extends Controller
 {
@@ -164,13 +165,11 @@ class PostController extends Controller
     }
 
     
-    public function postLike(Post $post){
+    public function postLike(Post $post,Request $request){
 
-        
+
          $liker = $post->likes->where('user_id',Auth::user()->id)->first();
 
-          
-      
         if(!$liker){
           $like = $post->likes()->create([
             'user_id' => Auth::user()->id,

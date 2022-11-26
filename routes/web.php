@@ -80,8 +80,7 @@ Route::middleware([
 
 
         Route::get('/gallery',[GalleryController::class,'showAddGallery']);
-        Route::post('/gallery',[GalleryController::class,'create'])->name('gallery_add');
-        
+        Route::post('/gallery',[GalleryController::class,'create'])->name('gallery_add');       
      });
     
 });
