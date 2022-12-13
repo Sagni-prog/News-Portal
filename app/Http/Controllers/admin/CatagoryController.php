@@ -15,6 +15,10 @@ class CatagoryController extends Controller
                     'show_on_menu' => $request->show_on_menu,
                     'catagory_order' => $request->catagory_order
          ]);
+
+         return response()->json([
+            "catagories" => $catagories
+         ]);
     }
 
     public function createSubCatagory(Request $request){

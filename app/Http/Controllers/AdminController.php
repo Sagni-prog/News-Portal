@@ -7,22 +7,23 @@ use App\Models\User;
 use File;
 use Storage;
 use Hash;
+use Auth;
 
 class AdminController extends Controller
 {
-    function getDashboard(){
-        return view('admin.admin_panel');
-    }
+    // function getDashboard(){
+    //     return view('admin.admin_panel');
+    // }
 
     public function create(Request $request){
        
-           
-    
             $user = User::create([
                     'name' => $request->name,
                     'email' => $request->email,
                     'password' => Hash::make($request->password),
             ]);
+
+            $token = $user->createToken('user_token')->plainTextToken;
                
                    if($request->hasFile('photo')){
             
@@ -52,28 +53,63 @@ class AdminController extends Controller
            }
 
            if($user){
-               return redirect('router');
+               return response()->json([
+                "token" => $token,
+                "user" => $user
+               ]);
            }
     }
 
-    public function showUpdateProfile(User $user){
+    public function login(Request $request){
 
-        return view('admin.update_profile',compact('user'));
+       $isUser = Auth::attempt(['email' => $request->email, 'password' => $request->password]);
+     
+       
+       if($isUser){
+           $user = User::where('email',$request->email)->first();
+           $token = $user->createToken('user_token')->plainTextToken;
+                return response()->json([
+                    "token" => $token,
+                    "user" => $user
+                ]);
+        }
+
     }
 
-    public function updateProfile(User $user, Request $request){
+    public function getAll(){
+        $users = User::all();
 
-            $user->update([
+        return response()->json([
+            "user" => $users
+        ]);
+    }
+
+    public function logout(){
+        Auth::logout();
+    }
+
+    // public function showUpdateProfile(User $user){
+
+    //     return view('admin.update_profile',compact('user'));
+    // }
+
+    public function updateProfile(Request $request){
+
+          $user =  Auth::user()->update([
                 "name" => $request->name,
                 "email" => $request->email
             ]);
+
+            return $user;
      }
 
-    public function updatePassword(User $user, Request $request){
+    public function updatePassword(Request $request){
            
-            $user->update([
+           $user = Auth::user()->update([
                 "password" => Hash::make($request->password),
             ]);
+
+            return $user;
      }
 
     public static function getDimension($path){

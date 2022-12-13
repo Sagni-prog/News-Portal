@@ -4,9 +4,9 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\models\Subcatagory;
-use App\models\Post;
-use App\models\Tag;
+use App\Models\Subcatagory;
+use App\Models\Post;
+use App\Models\Tag;
 use Storage;
 use Auth;
 use File;
@@ -16,20 +16,27 @@ class PostController extends Controller
 {
     public function showPost(){
 
-        $posts = Post::with('subCatagory','author')->get();
+       $posts = Post::with('subCatagory','author')->get();
+      //  $post = Post::all();
+
+       return $posts;
 
         // if (Auth::user()->cannot('view', $posts)) {
         //     abort(403);
         // }
        
-            return view('admin.post',compact('posts'));
+
+           // return view('admin.post',compact('posts'));
         
 
     }
-    public function showAddPost(){
-        $sub_catagories = Subcatagory::with('catagory')->get();
-        return view('admin.add_post',compact('sub_catagories'));
-    }
+    // public function showAddPost(){
+    //     $sub_catagories = Subcatagory::with('catagory')->get();
+
+       
+
+    //     return view('admin.add_post',compact('sub_catagories'));
+    // }
 
     public function create(Request $request){
 

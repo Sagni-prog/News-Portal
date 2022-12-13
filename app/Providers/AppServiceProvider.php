@@ -3,8 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\models\Post;
-use App\models\Catagory;
+use App\Models\Post;
+use App\Models\Catagory;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -18,6 +18,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $recent_news_data = Post::orderBy('id','desc')->get();
         $popular_news_data = Post::orderBy('visitors','desc')->get();
+       
 
         $catagories_data = Catagory::with('subCatagories')
         ->where('show_on_menu','show')

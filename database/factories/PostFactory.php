@@ -17,7 +17,13 @@ class PostFactory extends Factory
     public function definition()
     {
         return [
-            //
+                            'admin_id' => 1,
+                            'post_title' => "first post",
+                            'post_detail' => "whoops",
+                            'sub_catagory_id' => 1,
+                            'visitors' => 0,
+                            'is_sharable' => 1,
+                            'is_commentable' => 1
         ];
     }
 }
